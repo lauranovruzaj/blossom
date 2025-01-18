@@ -2,7 +2,13 @@
   "sections": {
     "banner": {
       "type": "main-collection-banner",
-      "settings": {}
+      "settings": {
+        "show_collection_description": true,
+        "show_collection_image": true,
+        "color_background_main": "rgba(0,0,0,0)",
+        "color_text_main": "#ffffff",
+        "height": "regular"
+      }
     },
     "product-grid": {
       "type": "main-collection-product-grid",
@@ -17,7 +23,13 @@
         },
         "quick_buy": {
           "type": "quick_buy",
-          "settings": {}
+          "settings": {
+            "type": "inline",
+            "show_only_available": false,
+            "show_price": false,
+            "variant_default": false,
+            "unavailable_variants": "hide"
+          }
         }
       },
       "block_order": [
@@ -25,7 +37,15 @@
         "title",
         "quick_buy"
       ],
-      "settings": {}
+      "settings": {
+        "products_number": 24,
+        "enable_filtering": true,
+        "enable_sorting": true,
+        "image_filter_layout": "onecolumn",
+        "filters_position": "sidebar",
+        "layout_desktop": "four-columns",
+        "layout_mobile": "grid-palm-2"
+      }
     }
   },
   "order": [
