@@ -1,23 +1,19 @@
-<style type="text/css">
-  .template-404 .title + * {
-    margin-top: 1rem;
-  }
+{%- render 'breadcrumb' container: 'compact', vertical_space: 'vertical-space-xsmall', style: 'breadcrumb-main--margin' -%}
 
-  @media screen and (min-width: 750px) {
-    .template-404 .title + * {
-      margin-top: 2rem;
-    }
-  }
-</style>
+<div class="container container--compact container--vertical-space-small main-page gutter-bottom--page">
 
-<div class="template-404 page-width page-margin center">
-  <p>
-    {{ 'templates.404.subtext' | t }}
-  </p>
-  <h1 class="title">
-    {{ 'templates.404.title' | t }}
-  </h1>
-  <a href="{{ routes.all_products_collection_url }}" class="button">
-    {{ 'general.continue_shopping' | t }}
-  </a>
+  <h1 class="title heading-size--page-title">{{ 'general.404.title' | t }}</h1>
+
+  <div class="rte">
+    <p>{{ 'general.404.subtitle' | t }}</p>
+  </div>
+  <a style="margin-top:1em" href="{{ routes.all_products_collection_url }}" class="button button--solid button--large">{{ 'general.404.continue_browsing' | t }}</a>
+
 </div>
+
+{% schema %}
+  {
+    "name": "t:sections.main-404.name",
+    "class": "shopify-section section-w-margin section-w-mobile-padding"
+  }
+{% endschema %}

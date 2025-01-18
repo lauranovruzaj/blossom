@@ -1,77 +1,118 @@
-{% comment %}theme-check-disable ImgLazyLoading{% endcomment %}
-{{ 'component-collection-hero.css' | asset_url | stylesheet_tag }}
+{% unless section.settings.show_collection_image and collection.image %}
+  {%- render 'breadcrumb', container: 'large', vertical_space: 'vertical-space-xsmall', style: 'breadcrumb-main--margin' -%}
+{%- endunless -%}
 
-{%- style -%}
-  @media screen and (max-width: 749px) {
-    .collection-hero--with-image .collection-hero__inner {
-      padding-bottom: calc({{ settings.media_shadow_vertical_offset | at_least: 0 }}px + 2rem);
-    }
-  }
-{%- endstyle -%}
+<div class="
+  {% if section.settings.show_collection_image and collection.image %}
+    container--fullwidth reduce-margin-if-first
+  {% else %}
+    container--large container--vertical-space-small
+  {% endif %}
+">
+  
+  {%- if section.settings.show_collection_image and collection.image -%}
+  
+    <div id="element-main-collection-banner" class="card align-content align-content--horizontal-left align-content--vertical-bottom margin-bottom--large element--height-{{ section.settings.height }}">
 
-<div class="collection-hero{% if section.settings.show_collection_image and collection.image %} collection-hero--with-image{% endif %} color-{{ section.settings.color_scheme }} gradient">
-  <div class="collection-hero__inner page-width {% if settings.animations_reveal_on_scroll %} scroll-trigger animate--fade-in{% endif %}">
-    <div class="collection-hero__text-wrapper">
-      <h1 class="collection-hero__title">
-        <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
-        {{- collection.title | escape -}}
-      </h1>
+      <div class="container--large container--vertical-space-small" style="z-index:9">
+        <div class="card__text gutter-bottom--large spacing--small remove-empty-space" style="margin:0">
 
-      {%- if section.settings.show_collection_description -%}
-        <div class="collection-hero__description rte">{{ collection.description }}</div>
-      {%- endif -%}
+          {%- render 'breadcrumb', container: 'element--show-when-section-is-first', vertical_space: 'vertical-space-xsmall', style: 'breadcrumb-main--margin' -%}
+
+          <div class="container--vertical-space-small">
+            <div class="section-heading section-heading--left section-heading--two-rows">
+              <div class="section-heading__text remove-empty-space">
+                <h1 class="heading-size--page-title">{{ collection.title | escape }}</h1>
+                {%- if section.settings.show_collection_description and collection.description != blank -%}
+                  <div class="collection-header__description rte">{{ collection.description }}</div>
+                {%- endif -%}
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card__image card__image--background {% if section.settings.color_background_main != "rgba(0,0,0,0)" %} card__image--with-overlay {% endif %}" aria-hidden="true">
+        {%- render 'lazy-image', image: collection.image, type: 'background', alt: collection.title, sizes: 'sizes="100vw"', class: 'lazy-image--to-reveal', id: section.id, overlay: true, preload: true -%} 
+      </div>
+
+      {%- render 'custom-colors', id: 'main-collection-banner', text: section.settings.color_text_main, background: section.settings.color_background_main, hide_borders: true -%}
+
     </div>
 
-    {%- if section.settings.show_collection_image and collection.image -%}
-      <div class="collection-hero__image-container media gradient">
-        <img
-          srcset="
-            {%- if collection.image.width >= 165 -%}{{ collection.image | image_url: width: 165 }} 165w,{%- endif -%}
-            {%- if collection.image.width >= 360 -%}{{ collection.image | image_url: width: 360 }} 360w,{%- endif -%}
-            {%- if collection.image.width >= 535 -%}{{ collection.image | image_url: width: 535 }} 535w,{%- endif -%}
-            {%- if collection.image.width >= 750 -%}{{ collection.image | image_url: width: 750 }} 750w,{%- endif -%}
-            {%- if collection.image.width >= 1070 -%}{{ collection.image | image_url: width: 1070 }} 1070w,{%- endif -%}
-            {%- if collection.image.width >= 1500 -%}{{ collection.image | image_url: width: 1500 }} 1500w,{%- endif -%}
-            {{ collection.image | image_url }} {{ collection.image.width }}w
-          "
-          src="{{ collection.image | image_url: width: 750 }}"
-          sizes="(min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 100 | divided_by: 2 }}px, (min-width: 750px) calc(50vw - 130px), calc(50vw - 55px)"
-          alt="{{ collection.image.alt | escape }}"
-          width="{{ collection.image.width }}"
-          height="{{ collection.image.height }}"
-        >
+  {%- else -%}
+    
+    <div class="section-heading section-heading--left section-heading--two-rows gutter-bottom--page">
+
+      <div class="section-heading__text remove-empty-space">
+
+        <h1 class="heading-size--page-title">{{ collection.title | escape }}</h1>
+
+        {%- if section.settings.show_collection_description and collection.description != blank -%}
+          <div class="collection-header__description rte">{{ collection.description }}</div>
+        {%- endif -%}
+
       </div>
-    {%- endif -%}
-  </div>
+
+    </div>
+
+  {%- endif -%}
+
 </div>
 
 {% schema %}
 {
   "name": "t:sections.main-collection-banner.name",
-  "class": "section",
+  "class": "main-collection-banner toggle-when-first container--remove-margin-after",
   "settings": [
+    {
+      "id": "show_collection_description",
+      "type": "checkbox",
+      "default": false,
+      "label": "t:sections.main-collection-banner.settings.show_collection_description.label"
+    },
+    {
+      "id": "show_collection_image",
+      "type": "checkbox",
+      "default": false,
+      "label": "t:sections.main-collection-banner.settings.show_collection_image.label"
+    },
     {
       "type": "paragraph",
       "content": "t:sections.main-collection-banner.settings.paragraph.content"
     },
     {
-      "type": "checkbox",
-      "id": "show_collection_description",
-      "default": true,
-      "label": "t:sections.main-collection-banner.settings.show_collection_description.label"
+      "type": "header",
+      "content": "t:sections.bundle-extra-words.sections.main-collection.settings.image_banner.header"
     },
     {
-      "type": "checkbox",
-      "id": "show_collection_image",
-      "default": false,
-      "label": "t:sections.main-collection-banner.settings.show_collection_image.label",
-      "info": "t:sections.main-collection-banner.settings.show_collection_image.info"
+      "type": "color",
+      "id": "color_background_main",
+      "label": "t:sections.local-extra-words.settings_schema.colors.settings.overlay",
+      "default": "rgba(0,0,0,0)"
     },
     {
-      "type": "color_scheme",
-      "id": "color_scheme",
-      "label": "t:sections.all.colors.label",
-      "default": "scheme-1"
+      "type": "color",
+      "id": "color_text_main",
+      "label": "t:sections.split-extra-words.settings_schema.colors.settings.text",
+      "default": "rgba(0,0,0,0)"
+    },
+    {
+      "type": "select",
+      "id": "height",
+      "label": "t:sections.bundle-extra-words.sections.main-collection.settings.image_banner.height",
+      "options": [
+        {
+          "value": "small",
+          "label": "t:sections.local-extra-words.sections.media-with-text-overlay.settings.option__1"
+        },
+        {
+          "value": "regular",
+          "label": "t:sections.local-extra-words.sections.media-with-text-overlay.settings.option__2"
+        }
+      ],
+      "default": "small"
     }
   ]
 }

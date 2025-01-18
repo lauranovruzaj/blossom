@@ -1,44 +1,73 @@
 {
-  "name": "t:sections.header.name",
   "type": "header",
+  "name": "t:sections.refactor_words.labels.header_group",
   "sections": {
-    "announcement-bar": {
+    "announcement": {
       "type": "announcement-bar",
       "blocks": {
-        "announcement-bar-0": {
-          "type": "announcement",
+        "content": {
+          "type": "content",
           "settings": {
-            "text": "Welcome to our store",
-            "text_alignment": "center",
-            "color_scheme": "scheme-1",
-            "link": ""
+            "text": "SAME-DAY DELIVERY GUARANTEED IF ORDERED BEFORE 4PM",
+            "link": "",
+            "target": false
           }
         }
       },
       "block_order": [
-        "announcement-bar-0"
-      ]
+        "content"
+      ],
+      "disabled": true,
+      "settings": {
+        "visibility": "all",
+        "show_locale_selector": false,
+        "show_country_selector": false,
+        "show_social_icons": false,
+        "bar_bgcolor": "#000000",
+        "bar_txtcolor": "#ffffff",
+        "border_color": "rgba(0,0,0,0)"
+      }
     },
     "header": {
       "type": "header",
+      "blocks": {
+        "menu": {
+          "type": "menu",
+          "settings": {
+            "linklist": "main-menu"
+          }
+        }
+      },
+      "block_order": [
+        "menu"
+      ],
       "settings": {
-        "color_scheme": "scheme-1",
-        "logo_position": "middle-left",
-        "menu": "main-menu",
-        "menu_type_desktop": "dropdown",
-        "sticky_header_type": "on-scroll-up",
-        "show_line_separator": true,
-        "enable_country_selector": true,
-        "enable_language_selector": true,
-        "mobile_logo_position": "center",
-        "margin_bottom": 0,
-        "padding_top": 20,
-        "padding_bottom": 20
+        "logo_src": "shopify:\/\/shop_images\/image_8.png",
+        "logo_height": 43,
+        "logo_mobile_height": 40,
+        "alignment": "left",
+        "label_style": "inline",
+        "sticky_header": true,
+        "show_header_border_bottom": false,
+        "show_header_border_top": false,
+        "custom_icon_select": "giftbox",
+        "label_text": "",
+        "custom_icon_link": "",
+        "open_in_new_window": false,
+        "header_absolute_homepage": true,
+        "header_absolute_collection": true,
+        "header_absolute_custom": "",
+        "color_text_header": "#ffffff",
+        "logo_src_transparent": "shopify:\/\/shop_images\/image_7.png",
+        "hide_header_border": false,
+        "show_locale_selector": false,
+        "show_country_selector": false,
+        "show_social_icons": false
       }
     }
   },
   "order": [
-    "announcement-bar",
+    "announcement",
     "header"
   ]
 }
